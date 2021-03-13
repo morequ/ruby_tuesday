@@ -19,16 +19,8 @@ class Computer
     result
   end
 
-  def mouse
-    get_component_info(:mouse)
-  end
-  
-  def cpu
-    get_component_info(:cpu)
-  end
-  
-  def keyboard
-    get_component_info(:keyboard)
+  [:mouse, :cpu, :keyboard].each do |attribute|
+    define_method(attribute) { get_component_info(attribute) }
   end
 end
 
