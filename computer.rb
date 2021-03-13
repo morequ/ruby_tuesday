@@ -19,6 +19,7 @@ class Computer
     result
   end
 
+  # Define new methods for each component. 
   [:mouse, :cpu, :keyboard].each do |attribute|
     define_method(attribute) { get_component_info(attribute) }
   end
