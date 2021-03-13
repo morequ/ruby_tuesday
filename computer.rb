@@ -10,7 +10,7 @@ class Computer
     begin
       info = @data_source.send("get_#{name.to_s}_info", @id)
       price = @data_source.send("get_#{name.to_s}_price", @id)
-    rescue
+    rescue NoMethodError
       raise ArgumentError, "name should be one of the [:mouse, :cpu, :keyboard]"
     end
 
