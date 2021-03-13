@@ -6,28 +6,29 @@ class Computer
     @data_source = data_source
   end
   
-  def mouse
-    info = @data_source.get_mouse_info(@id)
-    price = @data_source.get_mouse_price(@id)
-    result = "Mouse: #{info} ($#{price})"
+  private def get_component_info(name)
+    begin
+      info = @data_source.send("get_#{name.to_s}_info", @id)
+      price = @data_source.send("get_#{name.to_s}_price", @id)
+    rescue
+      raise ArgumentError, "name should be one of the [:mouse, :cpu, :keyboard]"
+    end
+
+    result = "#{name.to_s.capitalize} #{info} ($#{price})"
     return "* #{result}" if price >= 100
     result
+  end
+
+  def mouse
+    get_component_info(:mouse)
   end
   
   def cpu
-    info = @data_source.get_cpu_info(@id)
-    price = @data_source.get_cpu_price(@id)
-    result = "Cpu: #{info} ($#{price})"
-    return "* #{result}" if price >= 100
-    result
+    get_component_info(:cpu)
   end
   
   def keyboard
-    info = @data_source.get_keyboard_info(@id)
-    price = @data_source.get_keyboard_price(@id)
-    result = "Keyboard: #{info} ($#{price})"
-    return "* #{result}" if price >= 100
-    result
+    get_component_info(:keyboard)
   end
 end
 
